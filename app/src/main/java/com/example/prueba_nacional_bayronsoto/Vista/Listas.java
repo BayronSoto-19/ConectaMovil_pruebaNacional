@@ -26,6 +26,7 @@ public class Listas extends AppCompatActivity {
     ListView listV_usuario_Listas;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,43 +37,34 @@ public class Listas extends AppCompatActivity {
         inicializarfirebase();
         listarDatos();
     }
-    private void listarDatos() {
 
+    private void listarDatos() {
         databaseReference.child("Usuario").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 listUsuario.clear();
-                for(DataSnapshot objSnaptshot : dataSnapshot.getChildren()) {
-                    listaUsuario();
+
+                for (DataSnapshot objSnaptshot : dataSnapshot.getChildren()) {
                     Usuario u = objSnaptshot.getValue(Usuario.class);
                     listUsuario.add(u);
-
-                    arrayAdapterUsuario = new ArrayAdapter<Usuario>(Listas.this, android.R.layout.simple_list_item_1, listUsuario);
-                    listV_usuario_Listas.setAdapter(arrayAdapterUsuario);
                 }
 
-
+                // Mueve estas líneas fuera del bucle
+                arrayAdapterUsuario = new ArrayAdapter<Usuario>(Listas.this, android.R.layout.simple_list_item_1, listUsuario);
+                listV_usuario_Listas.setAdapter(arrayAdapterUsuario);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Manejar errores aquí
             }
-
-
-            private void listaUsuario() {
-            }
-
         });
-
     }
 
     private void inicializarfirebase() {
-
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
-
     }
 }

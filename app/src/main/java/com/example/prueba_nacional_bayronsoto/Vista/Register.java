@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,14 +49,14 @@ public class Register extends AppCompatActivity {
         Correo = findViewById(R.id.txtcorreo2);
         Contraseña2 = findViewById(R.id.txtcontraseña2);
 
-        registrar = findViewById(R.id.btnActualizar);
+        registrar = findViewById(R.id.btnActualizarPerfil);
         limpiar = findViewById(R.id.btnAgregarImg);
 
         listV_usuario = findViewById(R.id.lv_datosUsuarios);
 
         inicializarfirebase();
         listarDatos();
-        registar();
+        registrar();
         limpiar();
 
 
@@ -105,7 +104,7 @@ public class Register extends AppCompatActivity {
 
     }
 
-    private void registar(){
+    private void registrar() {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,10 +114,8 @@ public class Register extends AppCompatActivity {
                         || Correo.getText().toString().trim().isEmpty()
                         || Contraseña2.getText().toString().trim().isEmpty()) {
 
-                    Toast.makeText(Register.this, "Atencion, complrete los campos que le restan", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                    Toast.makeText(Register.this, "Atencion, complete los campos que le restan", Toast.LENGTH_SHORT).show();
+                } else {
                     int id = Integer.parseInt(Id.getText().toString());
                     String nombre = Nombre.getText().toString();
                     int Edad2 = Integer.parseInt(Edad.getText().toString());
@@ -133,7 +130,17 @@ public class Register extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Usuario usuario = new Usuario(id, nombre, Edad2, correo, contraseña2);
                             dbref.push().setValue(usuario);
-                            Toast.makeText(Register.this, "Atencion, se a registrado correctamente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Atencion, se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+
+                            // Crear un Intent para pasar datos a la actividad del perfil
+                            Intent intent = new Intent(Register.this, Perfil.class);
+                            intent.putExtra("nombre", nombre);
+                            intent.putExtra("edad", Edad2);
+                            intent.putExtra("correo", correo);
+                            intent.putExtra("contraseña", contraseña2);
+                            startActivity(intent);
+
+                            // Limpiar los campos después de agregar el usuario
                             Id.setText("");
                             Nombre.setText("");
                             Edad.setText("");
@@ -143,14 +150,14 @@ public class Register extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // Manejar errores
                         }
                     });
                 }
             }
         });
-
     }
+
 
     private void limpiar(){
         limpiar.setOnClickListener(new View.OnClickListener() {
