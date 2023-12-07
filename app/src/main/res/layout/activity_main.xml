@@ -54,6 +54,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="398dp"
         android:layout_height="64dp"
         android:layout_marginTop="63dp"
@@ -75,6 +76,24 @@
             android:layout_weight="1"
             android:text="Registrar" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="253dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/inicio"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

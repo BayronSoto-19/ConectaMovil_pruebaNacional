@@ -51,8 +51,8 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="460dp"
+                android:layout_width="361dp"
+                android:layout_height="581dp"
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
@@ -103,7 +103,7 @@
                 <Button
                     android:id="@+id/btnvolver"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="50dp"
                     android:text="volver" />
 
             </LinearLayout>

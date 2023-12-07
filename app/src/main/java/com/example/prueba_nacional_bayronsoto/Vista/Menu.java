@@ -12,7 +12,7 @@ import com.example.prueba_nacional_bayronsoto.R;
 import java.util.List;
 
 public class Menu extends AppCompatActivity {
-    private Button Lista, crud, perfil, cerrarSesion;
+    private Button Lista, crud, perfil, mensaje,cerrarSesion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,7 @@ public class Menu extends AppCompatActivity {
         crud = findViewById(R.id.btnCrudUsuarios);
         Lista = findViewById(R.id.btnListaUsuarios);
         cerrarSesion = findViewById(R.id.btnCerrarSesion);
+        mensaje = findViewById(R.id.btnMensajeria);
         // Vincula los demás botones aquí...
 
         // Configurar eventos de clic
@@ -47,9 +48,18 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        mensaje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Mensajeria.class);
+                startActivity(intent);
+            }
+        });
+
         cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
 
 
             }
