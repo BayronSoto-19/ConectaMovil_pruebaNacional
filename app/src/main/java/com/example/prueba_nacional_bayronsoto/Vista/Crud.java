@@ -3,9 +3,11 @@ package com.example.prueba_nacional_bayronsoto.Vista;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.prueba_nacional_bayronsoto.Modelo.Usuario;
 import com.example.prueba_nacional_bayronsoto.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +33,8 @@ public class Crud extends AppCompatActivity {
     EditText buscar, Id, nombre, edad, correo, contra;
 
     Button botonbuscar, botonagregar, botonmodificar, volver;
+
+    Usuario usuarioSelect;
 
     private List<Usuario> listUsuario = new ArrayList<Usuario>();
     ArrayAdapter<Usuario> arrayAdapterUsuario;
@@ -51,9 +57,52 @@ public class Crud extends AppCompatActivity {
 
         botonbuscar = findViewById(R.id.btnBuscar);
         botonagregar = findViewById(R.id.btnAgregarUsuario);
-        botonmodificar = findViewById(R.id.btnModificarUsuario);
+
+        volver = findViewById(R.id.btnvolver);
 
         listV_usuario_Listas_crud = findViewById(R.id.Lista_crud_Usuario);
+
+
+        botonbuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarUsuario();
+            }
+        });
+
+        botonagregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                agregar();
+            }
+        });
+
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        // Antes de configurar el Adapter y el OnItemClickListener, asegúrate de que listUsuario tenga datos.
+// ...
+
+        arrayAdapterUsuario = new ArrayAdapter<Usuario>(Crud.this, android.R.layout.simple_list_item_1, listUsuario);
+        listV_usuario_Listas_crud.setAdapter(arrayAdapterUsuario);
+
+        listV_usuario_Listas_crud.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                usuarioSelect = (Usuario) parent.getItemAtPosition(position);
+                Id.setText(usuarioSelect.getId());
+                nombre.setText(usuarioSelect.getNombre());
+                edad.setText(usuarioSelect.getEdad());
+                correo.setText(usuarioSelect.getCorreo());
+                contra.setText(usuarioSelect.getContraseña());
+            }
+        });
+
+
 
         inicializarfirebase();
         listarDatos();
@@ -80,12 +129,7 @@ public class Crud extends AppCompatActivity {
             }
         });
 
-        botonbuscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buscarUsuario();
-            }
-        });
+
     }
 
     private void buscarUsuario() {
@@ -137,4 +181,50 @@ public class Crud extends AppCompatActivity {
         firebaseDatabase.setPersistenceEnabled(true); // Mover esta línea al inicio
         databaseReference = firebaseDatabase.getReference();
     }
+
+    private void agregar() {
+        botonagregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Id.getText().toString().trim().isEmpty()
+                        || nombre.getText().toString().trim().isEmpty()
+                        || edad.getText().toString().trim().isEmpty()
+                        || correo.getText().toString().trim().isEmpty()
+                        || contra.getText().toString().trim().isEmpty()) {
+
+                    Toast.makeText(Crud.this, "Atencion, complete los campos que le restan", Toast.LENGTH_SHORT).show();
+                } else {
+                    int id = Integer.parseInt(Id.getText().toString());
+                    String nombreUsuario = nombre.getText().toString();
+                    int Edad2 = Integer.parseInt(edad.getText().toString());
+                    String correoUsuario = correo.getText().toString();
+                    String contraseña2 = contra.getText().toString();
+
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference dbref = db.getReference("Usuario");
+
+                    dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Usuario usuario = new Usuario(id, nombreUsuario, Edad2, correoUsuario, contraseña2);
+                            dbref.push().setValue(usuario);
+                            Toast.makeText(Crud.this, "Atencion, se ha registrado correctamente", Toast.LENGTH_SHORT).show();
+                            Id.setText("");
+                            nombre.setText("");
+                            edad.setText("");
+                            correo.setText("");
+                            contra.setText("");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Manejar errores de lectura desde Firebase
+                            Toast.makeText(Crud.this, "Error al registrar el usuario: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 }

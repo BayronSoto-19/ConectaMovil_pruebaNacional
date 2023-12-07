@@ -52,7 +52,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="460dp"
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
@@ -61,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Id" />
+
                 <EditText
                     android:id="@+id/editTextNombreCrud"
                     android:layout_width="match_parent"
@@ -84,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="text"
-                    android:hint="Contraseña" />
+                    android:hint="Contraseña"
+                    android:inputType="text" />
 
                 <Button
                     android:id="@+id/btnAgregarUsuario"
@@ -94,22 +95,15 @@
                     android:layout_marginTop="16dp"
                     android:text="Agregar Usuario" />
 
-                <Button
-                    android:id="@+id/btnModificarUsuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Modificar" />
-
                 <ListView
                     android:id="@+id/Lista_crud_Usuario"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="84dp" />
 
                 <Button
                     android:id="@+id/btnvolver"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:text="volver" />
 
             </LinearLayout>
