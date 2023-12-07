@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "11437281849",
+    "project_id": "fir-appinicio",
+    "storage_bucket": "fir-appinicio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11437281849:android:54ceb47df684dd1ad173e8",
+        "android_client_info": {
+          "package_name": "com.example.prueba_nacional_bayronsoto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIH1fSIg_vHSwGF4f5AOKvUr7lmPHIMf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
