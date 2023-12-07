@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Debe de rellenar los campos", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    startActivity(new Intent(MainActivity.this, mensaje.class));
+                    startActivity(new Intent(MainActivity.this, Menu.class));
                 }
             }
         });

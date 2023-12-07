@@ -56,6 +56,7 @@ public class Register extends AppCompatActivity {
         listV_usuario = findViewById(R.id.lv_datosUsuarios);
 
         inicializarfirebase();
+        listarDatos();
         registar();
         limpiar();
 
@@ -63,6 +64,38 @@ public class Register extends AppCompatActivity {
 
 
     }
+
+    private void listarDatos() {
+
+        databaseReference.child("Usuario").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                listUsuario.clear();
+                for(DataSnapshot objSnaptshot : dataSnapshot.getChildren()) {
+                    listaUsuario();
+                    Usuario u = objSnaptshot.getValue(Usuario.class);
+                    listUsuario.add(u);
+
+                    arrayAdapterUsuario = new ArrayAdapter<Usuario>(Register.this, android.R.layout.simple_list_item_1, listUsuario);
+                    listV_usuario.setAdapter(arrayAdapterUsuario);
+                }
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+            private void listaUsuario() {
+            }
+
+        });
+
+    }
+
     private void inicializarfirebase() {
 
         FirebaseApp.initializeApp(this);

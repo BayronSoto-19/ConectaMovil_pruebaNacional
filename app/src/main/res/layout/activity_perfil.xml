@@ -28,6 +28,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
+
                 <EditText
                     android:id="@+id/txtnombre"
                     android:layout_width="match_parent"
@@ -74,12 +76,6 @@
                     android:layout_weight="1"
                     android:text="Actualizar datos" />
 
-                <Button
-                    android:id="@+id/btnAgregarImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Limpiar" />
             </LinearLayout>
 
             <LinearLayout
